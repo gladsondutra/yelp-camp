@@ -15,12 +15,14 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user')
 const mongoSanitize = require('express-mongo-sanitize');
-
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
+const MongoStore = require('connect-mongo')(session);
+// const dbUrl = process.env.DB_URL
+const dbUrl = 'mongodb://localhost:27017/yelp-camp'
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -41,7 +43,18 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(mongoSanitize());
 
+const store = new MongoStore({
+  url: dbUrl,
+  secret: 'banana',
+  touchAfter: 24 * 60 * 60
+})
+
+store.on('error', function (e) {
+  console.log('session store error', e)
+})
+
 const sessionConfig = {
+  store,
   secret: 'banana',
   resave: false,
   saveUninitialized: true,

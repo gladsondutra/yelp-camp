@@ -1,3 +1,3 @@
-# Yelp Camp (In Progress)
+# Yelp Camp
 
-App built using node.js.
+App built using Node, Express and Mongo DB.
