@@ -1,5 +1,9 @@
 # Yelp Camp
 
-App built using Node, Express and Mongo DB.
+Yelpcamp is a Node.js web app developed during Colt Steele's Bootcamp.
+
+- Node.js
+- Express
+- Mongo DB
 
 https://yelpcamp-09nu.onrender.com
